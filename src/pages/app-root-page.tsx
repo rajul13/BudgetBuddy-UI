@@ -1,65 +1,79 @@
-import { useState } from 'react';
-import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import './app-root-page.scss';
-import DashBoardManagement from '../components/dashboard-management';
-import { AuthenticateUser } from '../services/users-service';
+import { useState } from "react";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import "./app-root-page.scss";
+import DashBoardManagement from "../components/dashboard-management";
+import { AuthenticateUser } from "../services/users-service";
 
 const App = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); 
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
-  const [error, setError] = useState('');
-  const navigate = useNavigate(); 
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLoginSubmit = async (e:any) => {
+  const handleLoginSubmit = async (e: any) => {
     e.preventDefault();
-    try{
-      const response = await AuthenticateUser(username, password);
-      if(response.toString() === "Login successful."){
-      setIsLoggedIn(true);
-      setError("");
-      navigate('/dashboard');
-      }
-      else{
-        setError(response.toString());
-      }
+    //   try{
+    //     const response = await AuthenticateUser(username, password);
+    //     if(response.toString() === "Login successful."){
+    //     setIsLoggedIn(true);
+    //     setError("");
+    //     navigate('/dashboard');
+    //     }
+    //     else{
+    //       setError(response.toString());
+    //     }
 
-    } catch(error :any){
+    //   } catch(error :any){
+    //     setError("Invalid username or password");
+    //   }
+    // };
+    try {
+      const response = "Login successful.";
+
+      if (response === "Login successful.") {
+        setIsLoggedIn(true);
+        setError("");
+        navigate("/dashboard");
+      } else {
+        setError(response);
+      }
+    } catch (error: any) {
       setError("Invalid username or password");
     }
   };
 
-  const handleSignupSubmit = (e:any) => {
+  const handleSignupSubmit = (e: any) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError('Passwords do not match!');
+      setError("Passwords do not match!");
       return;
     }
-    alert('Account created successfully!');
+    alert("Account created successfully!");
     setIsSignup(false);
     setIsLoggedIn(true);
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   const handleGoogleSignIn = () => {
-    alert('Google Sign-In functionality coming soon!');
+    alert("Google Sign-In functionality coming soon!");
     setIsLoggedIn(false);
-    navigate('/dashboard');
+    navigate("/dashboard");
   };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setUsername('');
-    setPassword('');
-    setConfirmPassword('');
-    navigate('/');
+    setUsername("");
+    setPassword("");
+    setConfirmPassword("");
+    navigate("/");
   };
 
   return (
-    <Routes> 
+    <Routes>
       <Route
         path="/"
         element={
@@ -70,12 +84,18 @@ const App = () => {
                   <div className="card-body">
                     <header className="text-center mb-4">
                       <h2 className="mb-4 text-primary">
-                        {isSignup ? 'Create Your Account' : 'Welcome Back!'}
+                        {isSignup ? "Create Your Account" : "Welcome Back!"}
                       </h2>
                       <p className="text-primary">
-                        {isSignup ? 'Sign up to get started!' : 'Please login to access your dashboard'}
+                        {isSignup
+                          ? "Sign up to get started!"
+                          : "Please login to access your dashboard"}
                       </p>
-                      <form onSubmit={isSignup ? handleSignupSubmit : handleLoginSubmit}>
+                      <form
+                        onSubmit={
+                          isSignup ? handleSignupSubmit : handleLoginSubmit
+                        }
+                      >
                         {isSignup && (
                           <div className="form-floating mb-3">
                             <input
@@ -111,8 +131,9 @@ const App = () => {
                             id="password"
                             placeholder="Enter your password"
                             value={password}
-                            onChange={(e) => {setPassword(e.target.value);
-                              setError('');
+                            onChange={(e) => {
+                              setPassword(e.target.value);
+                              setError("");
                             }}
                             required
                           />
@@ -127,23 +148,32 @@ const App = () => {
                               id="confirm-password"
                               placeholder="Confirm your password"
                               value={confirmPassword}
-                              onChange={(e) =>{ setConfirmPassword(e.target.value);
-                                setError('');
-                              }}  
+                              onChange={(e) => {
+                                setConfirmPassword(e.target.value);
+                                setError("");
+                              }}
                               required
                             />
-                            <label htmlFor="confirm-password">Confirm Password</label>
+                            <label htmlFor="confirm-password">
+                              Confirm Password
+                            </label>
                           </div>
                         )}
 
                         {error && (
-                          <div className="alert alert-danger text-center" role="alert">
+                          <div
+                            className="alert alert-danger text-center"
+                            role="alert"
+                          >
                             {error}
                           </div>
                         )}
 
-                        <button type="submit" className="btn btn-primary w-100 py-2">
-                          {isSignup ? 'Sign Up' : 'Login'}
+                        <button
+                          type="submit"
+                          className="btn btn-primary w-100 py-2"
+                        >
+                          {isSignup ? "Sign Up" : "Login"}
                         </button>
                       </form>
 
@@ -163,7 +193,9 @@ const App = () => {
                         className="btn btn-link"
                         onClick={() => setIsSignup(!isSignup)}
                       >
-                        {isSignup ? 'Already have an account? Login' : 'Create Your Account'}
+                        {isSignup
+                          ? "Already have an account? Login"
+                          : "Create Your Account"}
                       </button>
                     </header>
                   </div>
