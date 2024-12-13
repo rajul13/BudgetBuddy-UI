@@ -1,8 +1,10 @@
+import Navbar from "../pages/navbar";
 import "./dashboard.scss";
 
 function Dashboard() {
   return (
     <div className="dashboard-container">
+      <Navbar />  
       <h1 className="text-primary text-center py-3">Dashboard</h1>
       <div className="row gx-4 gy-4">
         <div className="col-md-4">

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.scss';
 import App from './pages/app-root-page';
 import { MantineProvider } from '@mantine/core';
-import { BrowserRouter as Router } from 'react-router-dom';  // Import BrowserRouter
+import { BrowserRouter as Router } from 'react-router-dom';  
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const root = ReactDOM.createRoot(
