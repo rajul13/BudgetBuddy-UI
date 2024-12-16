@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import "./app-root-page.scss";
 import DashBoardManagement from "../components/dashboard-management";
 import { AuthenticateUser } from "../services/users-service";
+import MyProfile from "../components/myProfile-component";
 
 const App = () => {
   const [username, setUsername] = useState("");
@@ -14,29 +15,24 @@ const App = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      setIsLoggedIn(true);
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
   const handleLoginSubmit = async (e: any) => {
     e.preventDefault();
-    //   try{
-    //     const response = await AuthenticateUser(username, password);
-    //     if(response.toString() === "Login successful."){
-    //     setIsLoggedIn(true);
-    //     setError("");
-    //     navigate('/dashboard');
-    //     }
-    //     else{
-    //       setError(response.toString());
-    //     }
-
-    //   } catch(error :any){
-    //     setError("Invalid username or password");
-    //   }
-    // };
     try {
       const response = "Login successful.";
 
       if (response === "Login successful.") {
         setIsLoggedIn(true);
         setError("");
+        // Store user data in localStorage (or use a token)
+        localStorage.setItem("user", JSON.stringify({ username }));
         navigate("/dashboard");
       } else {
         setError(response);
@@ -55,6 +51,7 @@ const App = () => {
     alert("Account created successfully!");
     setIsSignup(false);
     setIsLoggedIn(true);
+    localStorage.setItem("user", JSON.stringify({ username }));
     navigate("/dashboard");
   };
 
@@ -69,6 +66,7 @@ const App = () => {
     setUsername("");
     setPassword("");
     setConfirmPassword("");
+    localStorage.removeItem("user");
     navigate("/");
   };
 
@@ -83,10 +81,10 @@ const App = () => {
                 <div className="card shadow-lg p-4 rounded">
                   <div className="card-body">
                     <header className="text-center mb-4">
-                      <h2 className="mb-4 text-primary">
+                      <h2 className="mb-4 ">
                         {isSignup ? "Create Your Account" : "Welcome Back!"}
                       </h2>
-                      <p className="text-primary">
+                      <p className="">
                         {isSignup
                           ? "Sign up to get started!"
                           : "Please login to access your dashboard"}
@@ -210,6 +208,7 @@ const App = () => {
         path="/dashboard"
         element={isLoggedIn ? <DashBoardManagement /> : <Navigate to="/" />}
       />
+      <Route path="/profile" element={<MyProfile />} />
     </Routes>
   );
 };

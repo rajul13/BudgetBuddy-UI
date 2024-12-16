@@ -18,4 +18,5 @@ root.render(
       </Router>
     </MantineProvider>
   </React.StrictMode>
+  
 );

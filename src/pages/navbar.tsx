@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./navbar.scss";
+import ProfileDropdown from "../components/profile-dropdown-component";
 
 function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -10,22 +11,23 @@ function Navbar() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light shadow-sm py-3">
-      <div className="container d-flex justify-content-between align-items-center">
-        {/* <a className="navbar-brand d-flex align-items-center" href="#">
-          <img
-            src={"../images/BudgetBuddy.png"}
-            alt="Budget Buddy Logo"
-            width="40"
-            height="40"
-            className="me-2"
-          />
-          <span className="fw-bold text-primary">BudgetBuddy</span>
-        </a> */}
-        <span className="fw-bold text-primary">BudgetBuddy</span>
+      <div className="container-fluid d-flex justify-content-between align-items-center">
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav d-flex justify-content-center mb-2 mb-lg-0 w-100">
+          <ul className="navbar-nav mb-2 mb-lg-0 w-100 d-flex justify-content-center">
             <li className="nav-item">
-              <a className="nav-link active text-primary" href="#">
+              <a className="nav-link text-primary" href="#">
                 Home
               </a>
             </li>
@@ -34,29 +36,29 @@ function Navbar() {
                 About
               </a>
             </li>
+
+            {/* Features dropdown with manual toggle */}
             <li className="nav-item dropdown">
               <a
-                className={`nav-link dropdown-toggle text-secondary ${dropdownOpen ? "show" : ""}`}
+                className="nav-link dropdown-toggle text-secondary"
                 href="#"
-                id="navbarDropdown"
-                role="button"
                 onClick={(e) => {
                   e.preventDefault();
                   toggleDropdown();
                 }}
-                aria-expanded={dropdownOpen}
+                aria-expanded={dropdownOpen ? "true" : "false"}
               >
-                Services
+                Features
               </a>
               <ul className={`dropdown-menu ${dropdownOpen ? "show" : ""}`} aria-labelledby="navbarDropdown">
                 <li>
                   <a className="dropdown-item" href="#">
-                    Consulting
+                    Set Budget
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    Budget Planning
+                    Bufget History
                   </a>
                 </li>
                 <li>
@@ -69,24 +71,12 @@ function Navbar() {
                 </li>
               </ul>
             </li>
-            <li className="nav-item">
-              <a className="nav-link text-secondary" href="#">
-                Contact
-              </a>
-            </li>
           </ul>
         </div>
-        <form className="d-flex">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <button className="btn btn-primary px-4" type="submit">
-            Search
-          </button>
-        </form>
+
+        <span className="fw-bold text-primary fs-2">Budget Buddy</span>
+
+        <ProfileDropdown />
       </div>
     </nav>
   );
